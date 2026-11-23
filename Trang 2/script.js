@@ -124,15 +124,15 @@ const DEMO_USERS = {
 
 const NAV_LINKS = {
   student: [
-    { page: "trang1", text: "Trang chủ", href: "../Trang1_Truc/index.html" },
+    { page: "trang1", text: "Trang chủ", href: "../index.html" },
     { page: "trang2", text: "Tiến độ nộp bài", href: "../Trang 2/index_trang2.html" },
-    { page: "trang3", text: "Nộp đồ án", href: "../Trang3_Hieu/index.html" },
+    { page: "trang3", text: "Nộp đồ án", href: "../Trang3_Hieu/index_trang3.html" },
     { page: "trang4", text: "Điểm & nhận xét", href: "../Trang 4/index_trang4.html" }
   ],
   teacher: [
-    { page: "trang1", text: "Trang chủ", href: "../Trang1_Truc/index.html" },
-    { page: "trang5", text: "Chấm điểm", href: "../Trang5_Hoang/index.html" },
-    { page: "trang6", text: "Sinh viên", href: "../Trang6_Nhu/index.html" }
+    { page: "trang1", text: "Trang chủ", href: "../index.html" },
+    { page: "trang5", text: "Chấm điểm", href: "../Trang5_Hoang/index_trang5.html" },
+    { page: "trang6", text: "Sinh viên", href: "../Trang6_Nhu/index_trang6.html" }
   ]
 };
 
@@ -424,7 +424,7 @@ function renderNavbar() {
     .join("");
 
   header.innerHTML = `
-    <a href="../Trang1_Truc/index.html" class="logo">DeadLine Hub</a>
+    <a href="../index.html" class="logo">DeadLine Hub</a>
     <nav class="nav-links" aria-label="Menu chính">${links}</nav>
     <div class="nav-actions">
     <button id="themeToggle" class="theme-toggle" type="button" aria-label="Chế độ tối" aria-pressed="false">
@@ -434,7 +434,7 @@ function renderNavbar() {
     <div class="user-box">
       <span class="role-tag">${roleText}</span>
       <span>${escapeHtml(name)}</span>
-      <a href="../Trang7_Truc/index.html" class="logout" data-logout>Đăng xuất</a>
+      <a href="../Trang7_Truc/index_trang7.html" class="logout" data-logout>Đăng xuất</a>
     </div>
     <button class="hamburger" id="hamburgerBtn" type="button" aria-label="Mở menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -466,7 +466,7 @@ function renderNavbar() {
       <div><b>${escapeHtml(name)}</b><p>${roleText}</p></div>
     </div>
     <nav>${links}</nav>
-    <a href="../Trang7_Truc/index.html" class="btn btn-outline" data-logout>Đăng xuất</a>`;
+    <a href="../Trang7_Truc/index_trang7.html" class="btn btn-outline" data-logout>Đăng xuất</a>`;
   const overlay = document.createElement("div");
   overlay.className = "menu-overlay";
   document.body.append(menu, overlay);
@@ -569,32 +569,7 @@ function initScrollReveal() {
   new MutationObserver(scan).observe(document.body, { childList: true, subtree: true });
 }
 
-// Chỉ hiện các trang đồng đội khi chúng có mặt trong bản ghép.
-async function groupPageExists(path) {
-  if (location.protocol === "file:") return false;
-  try {
-    const result = await fetch(path);
-    if (!result.ok) return false;
-    const number = path.match(/Trang(\d+)_/)[1];
-    return (await result.text()).includes('data-page="trang' + number + '"');
-  } catch {
-    return false;
-  }
-}
-const groupPages = {};
-for (const key of ["Trang1_Truc", "Trang3_Hieu", "Trang7_Truc"]) {
-  groupPages[key] = groupPageExists("../" + key + "/index.html");
-}
 renderNavbar();
-for (const [key, available] of Object.entries(groupPages)) {
-  available.then(exists => {
-    if (exists) return;
-    for (const link of document.querySelectorAll('a[href^="../' + key + '/"]')) {
-      if (link.classList.contains("logo")) link.href = "../Trang 2/index_trang2.html";
-      else link.hidden = true;
-    }
-  });
-}
 window.addEventListener("pageshow", event => { if (event.persisted) location.reload(); });
 window.addEventListener("storage", event => {
   if (["pm_students", "pm_milestones", "pm_user"].includes(event.key)) location.reload();
@@ -638,7 +613,7 @@ function renderTimeline() {
           : '<p class="deadline-state">Còn <time data-remaining="' + m.id + '"></time> để nộp</p>'}
         ${detail}
         <div class="tl-actions">
-          <button type="button" class="btn btn-outline" data-submit="${m.id}">${sub ? "Nộp lại" : "Nộp bài"}</button>
+          <a class="btn btn-outline" href="../Trang3_Hieu/index_trang3.html?moc=${encodeURIComponent(m.id)}">${sub ? "Nộp lại" : "Nộp bài"}</a>
         </div>
       </article>
     </li>`;
@@ -721,51 +696,6 @@ function submissionLink(sub) {
   a.textContent = isDemoDocument ? 'Xem tài liệu minh họa' : 'Mở bài đã nộp';
   return a.outerHTML;
 }
-
-const dialog = document.querySelector('#submitDialog');
-const field = document.querySelector('#workUrl');
-let selectedMilestone;
-document.querySelector('#timeline').addEventListener('click', async event => {
-  const button = event.target.closest('[data-submit]');
-  if (!button) return;
-  selectedMilestone = milestones.find(item => item.id === Number(button.dataset.submit));
-  if (await groupPages.Trang3_Hieu) {
-    location.href = "../Trang3_Hieu/index.html?moc=" + encodeURIComponent(selectedMilestone.id);
-    return;
-  }
-  document.querySelector('#submitTitle').textContent = selectedMilestone.name;
-  field.value = '';
-  field.setCustomValidity('');
-  dialog.showModal();
-  field.focus();
-});
-document.querySelector('#cancelWork').onclick = () => dialog.close();
-field.oninput = () => field.setCustomValidity('');
-document.querySelector('#sendWork').onsubmit = event => {
-  event.preventDefault();
-  const link = field.value.trim();
-  if (!['http:', 'https:'].includes(safeProtocol(link))) {
-    field.setCustomValidity('Hãy dùng liên kết bắt đầu bằng https:// hoặc http://.');
-    field.reportValidity();
-    return;
-  }
-  try {
-    const records = JSON.parse(localStorage.getItem('pm_students')) || students;
-    const record = records.find(item => item.id === user.id);
-    if (!record) throw new Error('missing student');
-    record.submissions.push({milestoneId:selectedMilestone.id, link, date:new Date().toISOString(), note:''});
-    localStorage.setItem('pm_students', JSON.stringify(records));
-    me.submissions = record.submissions;
-  } catch {
-    showToast('Chưa lưu được bài. Hãy kiểm tra tài khoản và thử lại.', 'error');
-    return;
-  }
-  dialog.close();
-  renderTimeline();
-  renderSide();
-  renderFlipCards();
-  showToast('Đã ghi nhận bài nộp.');
-};
 
 const sampleDocuments = {
   "moc-2": "ĐỀ CƯƠNG ĐỒ ÁN\n\nĐề tài: Khảo sát thói quen tự học của sinh viên.\nĐối tượng: 40 sinh viên năm hai.\nPhương pháp: bảng hỏi ẩn danh và tổng hợp kết quả.\nKế hoạch: tuần 1 soạn bảng hỏi, tuần 2 khảo sát, tuần 3 phân tích, tuần 4 viết báo cáo.",

@@ -92,15 +92,15 @@ const DEMO_USERS = {
 
 const NAV_LINKS = {
   student: [
-    { page: "trang1", text: "Trang chủ", href: "../Trang1_Truc/index_trang1.html" },
-    { page: "trang2", text: "Timeline", href: "../Trang2_Cuong/index.html" },
-    { page: "trang3", text: "Nộp đồ án", href: "../Trang3_Hieu/index.html" },
-    { page: "trang4", text: "Điểm & nhận xét", href: "../Trang4_Cuong/index.html" }
+    { page: "trang1", text: "Trang chủ", href: "../index.html" },
+    { page: "trang2", text: "Timeline", href: "../Trang 2/index_trang2.html" },
+    { page: "trang3", text: "Nộp đồ án", href: "../Trang3_Hieu/index_trang3.html" },
+    { page: "trang4", text: "Điểm & nhận xét", href: "../Trang 4/index_trang4.html" }
   ],
   teacher: [
-    { page: "trang1", text: "Trang chủ", href: "../Trang1_Truc/index_trang1.html" },
-    { page: "trang5", text: "Chấm điểm", href: "../Trang5_Hoang/index.html" },
-    { page: "trang6", text: "Sinh viên", href: "../Trang6_Nhu/index.html" }
+    { page: "trang1", text: "Trang chủ", href: "../index.html" },
+    { page: "trang5", text: "Chấm điểm", href: "../Trang5_Hoang/index_trang5.html" },
+    { page: "trang6", text: "Sinh viên", href: "../Trang6_Nhu/index_trang6.html" }
   ]
 };
 
@@ -335,7 +335,7 @@ function renderNavbar() {
     .join("");
 
   header.innerHTML = `
-    <a href="../Trang1_Truc/index_trang1.html" class="logo">DeadLine Hub</a>
+    <a href="../index.html" class="logo">DeadLine Hub</a>
     <nav class="nav-links" aria-label="Menu chính">${links}</nav>
     <div class="user-box">
       <span class="role-tag">${roleText}</span>
@@ -647,7 +647,7 @@ function goHome(user) {
   setTimeout(() => {
     document.getElementById("pageLoader").classList.remove("hide");
     setTimeout(() => {
-      location.href = "../Trang1_Truc/index_trang1.html";
+      location.href = "../index.html";
     }, 450);
   }, 600);
 }

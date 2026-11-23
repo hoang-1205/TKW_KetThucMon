@@ -92,15 +92,15 @@ const DEMO_USERS = {
 
 const NAV_LINKS = {
   student: [
-    { page: "trang1", text: "Trang chủ", href: "../Trang1_Truc/index_trang1.html" },
-    { page: "trang2", text: "Timeline", href: "../Trang2_Cuong/index.html" },
-    { page: "trang3", text: "Nộp đồ án", href: "../Trang3_Hieu/index.html" },
-    { page: "trang4", text: "Điểm & nhận xét", href: "../Trang4_Cuong/index.html" }
+    { page: "trang1", text: "Trang chủ", href: "index.html" },
+    { page: "trang2", text: "Timeline", href: "Trang 2/index_trang2.html" },
+    { page: "trang3", text: "Nộp đồ án", href: "Trang3_Hieu/index_trang3.html" },
+    { page: "trang4", text: "Điểm & nhận xét", href: "Trang 4/index_trang4.html" }
   ],
   teacher: [
-    { page: "trang1", text: "Trang chủ", href: "../Trang1_Truc/index_trang1.html" },
-    { page: "trang5", text: "Chấm điểm", href: "../Trang5_Hoang/index.html" },
-    { page: "trang6", text: "Sinh viên", href: "../Trang6_Nhu/index.html" }
+    { page: "trang1", text: "Trang chủ", href: "index.html" },
+    { page: "trang5", text: "Chấm điểm", href: "Trang5_Hoang/index_trang5.html" },
+    { page: "trang6", text: "Sinh viên", href: "Trang6_Nhu/index_trang6.html" }
   ]
 };
 
@@ -335,12 +335,12 @@ function renderNavbar() {
     .join("");
 
   header.innerHTML = `
-    <a href="../Trang1_Truc/index_trang1.html" class="logo">DeadLine Hub</a>
+    <a href="index.html" class="logo">DeadLine Hub</a>
     <nav class="nav-links" aria-label="Menu chính">${links}</nav>
     <div class="user-box">
       <span class="role-tag">${roleText}</span>
       <span>${escapeHtml(name)}</span>
-      <a href="../Trang7_Truc/index_trang7.html" class="logout" data-logout>Đăng xuất</a>
+      <a href="Trang7_Truc/index_trang7.html" class="logout" data-logout>Đăng xuất</a>
     </div>
     <button class="hamburger" id="hamburgerBtn" type="button" aria-label="Mở menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -356,7 +356,7 @@ function renderNavbar() {
       <div><b>${escapeHtml(name)}</b><p>${roleText}</p></div>
     </div>
     <nav>${links}</nav>
-    <a href="../Trang7_Truc/index_trang7.html" class="btn btn-outline" data-logout>Đăng xuất</a>`;
+    <a href="Trang7_Truc/index_trang7.html" class="btn btn-outline" data-logout>Đăng xuất</a>`;
   const overlay = document.createElement("div");
   overlay.className = "menu-overlay";
   document.body.append(menu, overlay);
@@ -793,10 +793,10 @@ function renderMilestones() {
   const nextStep = document.getElementById("nextStep");
   if (user.role === "teacher") {
     nextStep.innerHTML = `
-      <a href="../Trang5_Hoang/index.html" class="btn btn-primary">Bắt đầu chấm điểm</a>
-      <a href="../Trang6_Nhu/index.html" class="btn btn-outline">Xem Timeline &amp; hồ sơ sinh viên</a>`;
+      <a href="Trang5_Hoang/index_trang5.html" class="btn btn-primary">Bắt đầu chấm điểm</a>
+      <a href="Trang6_Nhu/index_trang6.html" class="btn btn-outline">Xem Timeline &amp; hồ sơ sinh viên</a>`;
   } else {
-    nextStep.innerHTML = `<a href="../Trang2_Cuong/index.html" class="btn btn-primary">Xem Timeline dự án</a>`;
+    nextStep.innerHTML = `<a href="Trang 2/index_trang2.html" class="btn btn-primary">Xem Timeline dự án</a>`;
   }
 }
 

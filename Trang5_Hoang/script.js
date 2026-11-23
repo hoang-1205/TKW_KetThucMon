@@ -279,17 +279,21 @@ function httpUrl(raw) {
   } catch { return null; }
 }
 
-function showLink(raw) {
+function showLink(raw, studentId, milestoneId) {
   const box = byId("submissionLink");
   const text = String(raw ?? "");
-  const url = httpUrl(text);
+  const samplePage = new URL("../Trang 2/index_trang2.html", location.href);
+  const prefix = studentId === "SV01" ? "" : studentId + "-";
+  samplePage.searchParams.set("mau", prefix + "moc-" + milestoneId);
+  const isSample = text === samplePage.href;
+  const url = isSample ? samplePage : httpUrl(text);
   box.replaceChildren();
   if (url) {
     const link = document.createElement("a");
     link.href = url.href;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
-    link.textContent = text;
+    link.textContent = isSample ? "Xem tài liệu minh họa" : text;
     box.append(link);
   } else {
     const original = document.createElement("p");
@@ -316,7 +320,7 @@ function showDetails(row) {
   const delivery = time === null || due === null ? "unknown" : time > due ? "late" : "ontime";
   setBadge(byId("deliveryBadge"), delivery);
   setBadge(byId("gradeBadge"), grade ? "done" : "wait");
-  showLink(submission.link);
+  showLink(submission.link, student.id, milestone.id);
   byId("submissionNote").textContent = String(submission.note ?? "").trim() || "Không có";
 }
 
@@ -576,7 +580,7 @@ document.querySelectorAll("[data-destination]").forEach(link => {
 });
 document.querySelectorAll("[data-logout]").forEach(button => {
   button.addEventListener("click", () => {
-    const loginPage = "../Trang7_Truc/index.html";
+    const loginPage = "../Trang7_Truc/index_trang7.html";
     if (isStandaloneDemo()) {
       showProjectDestination("Đăng xuất", loginPage, "Bạn đang dùng tài khoản mẫu. Trang đăng nhập nằm trong bộ DeadLine Hub đầy đủ.");
       return;

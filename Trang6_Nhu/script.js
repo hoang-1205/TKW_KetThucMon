@@ -92,14 +92,14 @@ const DEMO_USERS = {
 
 const NAV_LINKS = {
   student: [
-    { page: "trang1", text: "Trang chủ", href: "../Trang1_Truc/index.html" },
-    { page: "trang2", text: "Timeline", href: "../Trang2_Cuong/index.html" },
-    { page: "trang3", text: "Nộp đồ án", href: "../Trang3_Hieu/index.html" },
-    { page: "trang4", text: "Điểm & nhận xét", href: "../Trang4_Cuong/index.html" }
+    { page: "trang1", text: "Trang chủ", href: "../index.html" },
+    { page: "trang2", text: "Timeline", href: "../Trang 2/index_trang2.html" },
+    { page: "trang3", text: "Nộp đồ án", href: "../Trang3_Hieu/index_trang3.html" },
+    { page: "trang4", text: "Điểm & nhận xét", href: "../Trang 4/index_trang4.html" }
   ],
   teacher: [
-    { page: "trang1", text: "Trang chủ", href: "../Trang1_Truc/index.html" },
-    { page: "trang5", text: "Chấm điểm", href: "../Trang5_Hoang/index.html" },
+    { page: "trang1", text: "Trang chủ", href: "../index.html" },
+    { page: "trang5", text: "Chấm điểm", href: "../Trang5_Hoang/index_trang5.html" },
     { page: "trang6", text: "Sinh viên", href: "../Trang6_Nhu/index_trang6.html" }
   ]
 };
@@ -335,12 +335,12 @@ function renderNavbar() {
     .join("");
 
   header.innerHTML = `
-    <a href="../Trang1_Truc/index.html" class="logo">DeadLine Hub</a>
+    <a href="../index.html" class="logo">DeadLine Hub</a>
     <nav class="nav-links" aria-label="Menu chính">${links}</nav>
     <div class="user-box">
       <span class="role-tag">${roleText}</span>
       <span>${escapeHtml(name)}</span>
-      <a href="../Trang7_Truc/index.html" class="logout" data-logout>Đăng xuất</a>
+      <a href="../Trang7_Truc/index_trang7.html" class="logout" data-logout>Đăng xuất</a>
     </div>
     <button class="hamburger" id="hamburgerBtn" type="button" aria-label="Mở menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -356,7 +356,7 @@ function renderNavbar() {
       <div><b>${escapeHtml(name)}</b><p>${roleText}</p></div>
     </div>
     <nav>${links}</nav>
-    <a href="../Trang7_Truc/index.html" class="btn btn-outline" data-logout>Đăng xuất</a>`;
+    <a href="../Trang7_Truc/index_trang7.html" class="btn btn-outline" data-logout>Đăng xuất</a>`;
   const overlay = document.createElement("div");
   overlay.className = "menu-overlay";
   document.body.append(menu, overlay);
@@ -582,7 +582,7 @@ function showStudent(id) {
       <h2>${escapeHtml(s.name)}</h2>
       <div class="chips">
         <span>MSSV: ${s.mssv}</span>
-        <span>Lớp: ${s.className}</span>
+        <span>Lớp: ${escapeHtml(s.className || "Chưa cập nhật")}</span>
         <span>${escapeHtml(s.project.group)}</span>
       </div>
     </div>
@@ -598,7 +598,7 @@ function showStudent(id) {
     ["Ngành", s.major, "💻"], ["Email", s.email, "✉"], ["Số điện thoại", s.phone, "☎"]
   ];
   document.getElementById("profileGrid").innerHTML = info.map(i =>
-    `<div class="info-item"><p>${i[0]}</p><b>${escapeHtml(i[1])}</b></div>`).join("");
+    `<div class="info-item"><p>${i[0]}</p><b>${escapeHtml(i[1] || "Chưa cập nhật")}</b></div>`).join("");
   document.getElementById("studyGrid").innerHTML = [
     ["Học phần", "Lập trình Front-end"], ["Nhóm", s.project.group], ["Giảng viên hướng dẫn", "ThS. Nguyễn Văn Minh"]
   ].map(i => `<div class="info-item"><p>${i[0]}</p><b>${escapeHtml(i[1])}</b></div>`).join("");
@@ -635,19 +635,19 @@ function showStudent(id) {
       <div class="project-icon">${s.project.group.replace("Nhóm ", "N")}</div>
       <div>
         <h3 class="project-name">${escapeHtml(s.project.name)}</h3>
-        <p class="small">${escapeHtml(s.project.desc)}</p>
-        <div class="tags">${s.project.tech.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+        <p class="small">${escapeHtml(s.project.desc || "")}</p>
+        <div class="tags">${(s.project.tech || []).map(t => `<span class="tag">${t}</span>`).join("")}</div>
       </div>
     </div>
     <dl class="info-list">
-      <dt>Repository</dt><dd><a href="${escapeHtml(s.project.repo)}" target="_blank">${escapeHtml(s.project.repo)}</a></dd>
+      <dt>Repository</dt><dd>${s.project.repo ? `<a href="${escapeHtml(s.project.repo)}" target="_blank">${escapeHtml(s.project.repo)}</a>` : "Chưa cập nhật"}</dd>
       <dt>Tiến độ</dt><dd>
         <div class="progress-head"><span>Đã nộp ${done}/${milestones.length} mốc</span><b>${percent}%</b></div>
         <div class="progress"><div style="width:${percent}%"></div></div>
       </dd>
     </dl>
     <p class="members-label">Thành viên nhóm</p>
-    <div class="members">${s.project.members.map(name => {
+    <div class="members">${(s.project.members || []).map(name => {
       const leader = name.includes("(Trưởng nhóm)");
       const clean = name.replace(" (Trưởng nhóm)", "");
       return `<button type="button" class="member ${leader ? "leader" : ""}" data-name="${escapeHtml(clean)}" title="Xem hồ sơ ${escapeHtml(clean)}"><span class="avatar">${initials(clean)}</span>${escapeHtml(clean)}${leader ? ' <span class="leader-tag">Trưởng nhóm</span>' : ""}</button>`;

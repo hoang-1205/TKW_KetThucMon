@@ -92,15 +92,15 @@ const DEMO_USERS = {
 
 const NAV_LINKS = {
   student: [
-    { page: "trang1", text: "Trang chủ", href: "../Trang1_Truc/index.html" },
-    { page: "trang2", text: "Timeline", href: "../Trang2_Cuong/index.html" },
-    { page: "trang3", text: "Nộp đồ án", href: "../Trang3_Hieu/index.html" },
-    { page: "trang4", text: "Điểm & nhận xét", href: "../Trang4_Cuong/index.html" }
+    { page: "trang1", text: "Trang chủ", href: "../index.html" },
+    { page: "trang2", text: "Timeline", href: "../Trang 2/index_trang2.html" },
+    { page: "trang3", text: "Nộp đồ án", href: "../Trang3_Hieu/index_trang3.html" },
+    { page: "trang4", text: "Điểm & nhận xét", href: "../Trang 4/index_trang4.html" }
   ],
   teacher: [
-    { page: "trang1", text: "Trang chủ", href: "../Trang1_Truc/index.html" },
-    { page: "trang5", text: "Chấm điểm", href: "../Trang5_Hoang/index.html" },
-    { page: "trang6", text: "Sinh viên", href: "../Trang6_Nhu/index.html" }
+    { page: "trang1", text: "Trang chủ", href: "../index.html" },
+    { page: "trang5", text: "Chấm điểm", href: "../Trang5_Hoang/index_trang5.html" },
+    { page: "trang6", text: "Sinh viên", href: "../Trang6_Nhu/index_trang6.html" }
   ]
 };
 
@@ -382,7 +382,7 @@ function renderNavbar() {
   const themeLabel = currentTheme === "dark" ? "Chuyển sang chế độ sáng" : "Chuyển sang chế độ tối";
 
   header.innerHTML = `
-    <a href="../Trang1_Truc/index.html" class="logo">DeadLine Hub</a>
+    <a href="../index.html" class="logo">DeadLine Hub</a>
     <nav class="nav-links" aria-label="Menu chính">${links}</nav>
     <div class="user-box">
       <button type="button" class="theme-toggle" id="themeToggle" aria-label="${themeLabel}" title="${themeLabel}">
@@ -390,7 +390,7 @@ function renderNavbar() {
       </button>
       <span class="role-tag">${roleText}</span>
       <span>${escapeHtml(name)}</span>
-      <a href="../Trang7_Truc/index.html" class="logout" data-logout>Đăng xuất</a>
+      <a href="../Trang7_Truc/index_trang7.html" class="logout" data-logout>Đăng xuất</a>
     </div>
     <div class="nav-right-actions">
       <button type="button" class="theme-toggle mobile-theme-toggle" id="mobileThemeToggle" aria-label="${themeLabel}" title="${themeLabel}">
@@ -414,7 +414,7 @@ function renderNavbar() {
       </button>
     </div>
     <nav>${links}</nav>
-    <a href="../Trang7_Truc/index.html" class="btn btn-outline" data-logout>Đăng xuất</a>`;
+    <a href="../Trang7_Truc/index_trang7.html" class="btn btn-outline" data-logout>Đăng xuất</a>`;
   const overlay = document.createElement("div");
   overlay.className = "menu-overlay";
   document.body.append(menu, overlay);

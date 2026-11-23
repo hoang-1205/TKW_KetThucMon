@@ -16,8 +16,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" media="print" onload="this.media='all'">
   <script src="script.js" defer></script>
 </head>
-<!-- Khi ghép với các trang còn lại, đổi data-mode thành "project" để điều hướng trực tiếp. -->
-<body data-mode="standalone">
+<body data-mode="project" data-page="trang5">
   <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
     <symbol id="i-tray" viewBox="0 0 24 24"><path d="m3 14 3.5-9h11l3.5 9v5H3z"/><path d="M3 14h5l2 3h4l2-3h5"/></symbol>
     <symbol id="i-grade" viewBox="0 0 24 24"><path d="M12 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="m10 14 1-4 7-7a1.4 1.4 0 0 1 2 0l1 1a1.4 1.4 0 0 1 0 2l-7 7zM16 5l3 3"/></symbol>
@@ -46,11 +45,11 @@
       <button id="openMenu" class="icon-button menu-toggle" type="button" aria-label="Mở menu điều hướng" aria-controls="mobileMenu" aria-expanded="false">
         <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
       </button>
-      <a class="brand" href="../Trang1_Truc/index.html" data-destination="Trang chủ">DeadLine Hub</a>
+      <a class="brand" href="../index.html" data-destination="Trang chủ">DeadLine Hub</a>
       <nav class="desktop-nav" aria-label="Điều hướng chính">
-        <a href="../Trang1_Truc/index.html" data-destination="Trang chủ">Trang chủ</a>
+        <a href="../index.html" data-destination="Trang chủ">Trang chủ</a>
         <a href="#noi-dung" aria-current="page">Chấm điểm</a>
-        <a href="../Trang6_Nhu/index.html" data-destination="Sinh viên">Sinh viên</a>
+        <a href="../Trang6_Nhu/index_trang6.html" data-destination="Sinh viên">Sinh viên</a>
       </nav>
       <div class="nav-account">
         <button type="button" class="theme-toggle" data-theme-toggle aria-label="Giao diện tối" aria-pressed="false" title="Chuyển sang giao diện tối">
@@ -71,9 +70,9 @@
       <button class="icon-button" id="closeMenu" type="button" aria-label="Đóng menu"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
     </div>
     <nav class="drawer-nav" aria-label="Điều hướng trên di động">
-      <a href="../Trang1_Truc/index.html" data-destination="Trang chủ">Trang chủ</a>
+      <a href="../index.html" data-destination="Trang chủ">Trang chủ</a>
       <a href="#noi-dung" aria-current="page">Chấm điểm</a>
-      <a href="../Trang6_Nhu/index.html" data-destination="Sinh viên">Sinh viên</a>
+      <a href="../Trang6_Nhu/index_trang6.html" data-destination="Sinh viên">Sinh viên</a>
     </nav>
     <div class="drawer-account"><span class="role-tag">Giảng viên</span><strong data-teacher-name>ThS. Nguyễn Văn Minh</strong><button class="logout" type="button" data-logout>Đăng xuất</button></div>
   </dialog>
