@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Dòng thời gian các mốc deadline báo cáo đồ án, trạng thái nộp và đồng hồ đếm ngược.">
+<title>Tiến độ nộp đồ án | DeadLine Hub</title>
+<meta name="color-scheme" content="light dark">
+<script>
+  try {
+    const saved = localStorage.getItem("pm_theme");
+    document.documentElement.dataset.theme = saved === "dark" || saved === "light"
+      ? saved : (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  } catch {
+    document.documentElement.dataset.theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+</script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="trang2" data-role="student">
+<div class="page-loader" id="pageLoader" aria-hidden="true">
+  <p class="loader-logo">DeadLine Hub</p>
+  <div class="loader-dots"><i></i><i></i><i></i></div>
+  <div class="loader-bar"><span></span></div>
+</div>
+<header class="navbar" id="navbar"></header>
+<main class="main">
+  <section class="page-head reveal">
+    <h1 class="page-title">Tiến độ nộp đồ án</h1>
+    <p class="page-desc">Theo dõi hạn nộp, xem yêu cầu và gửi bài theo từng mốc.</p>
+  </section>
+
+  <div class="layout-2-1">
+    <section class="card reveal d1">
+      <div class="filter-row">
+        <h2 class="card-title" style="margin:0;border:0;padding:0">Các đợt nộp bài</h2>
+        <select class="input" id="statusFilter" aria-label="Lọc theo trạng thái">
+          <option value="all">Tất cả</option>
+          <option value="done">Đã nộp</option>
+          <option value="pending">Chưa nộp</option>
+          <option value="late">Trễ hạn</option>
+        </select>
+      </div>
+      <ol class="timeline" id="timeline"></ol>
+    </section>
+    <aside class="side">
+      <section class="card countdown-card reveal d2">
+        <h2 class="card-title">Bài tiếp theo cần nộp</h2>
+        <p><b id="nextName"></b><br><span id="nextDate"></span></p>
+        <div class="countdown" id="countdown"></div>
+      </section>
+      <section class="card reveal d3">
+        <h2 class="card-title">Tiến độ của tôi</h2>
+        <div class="progress-head"><span id="progressText"></span><b id="progressPercent"></b></div>
+        <div class="progress"><div id="progressBar"></div></div>
+      </section>
+      <section class="card reveal d3">
+        <h2 class="card-title">Chú thích trạng thái</h2>
+        <ul class="note-list">
+          <li><span class="badge done">Đã nộp</span> Nộp trước hoặc đúng hạn</li>
+          <li><span class="badge pending">Chưa nộp</span> Chưa nộp, còn trong hạn</li>
+          <li><span class="badge late">Trễ hạn</span> Nộp sau hạn hoặc đã quá hạn</li>
+        </ul>
+      </section>
+      <section class="card reveal d3">
+        <h2 class="card-title">Mẹo nộp đúng hạn</h2>
+        <ul class="tip-list">
+          <li>Nếu gửi qua liên kết, hãy cấp quyền xem cho giảng viên.</li>
+          <li>Nộp sớm 1 ngày để tránh lỗi phút chót</li>
+          <li>Nộp lại được, hệ thống lấy lần mới nhất</li>
+        </ul>
+      </section>
+    </aside>
+  </div>
+
+  <section class="section-gap reveal">
+    <h2 class="card-title">Yêu cầu từng mốc (bấm thẻ để lật)</h2>
+    <div class="flip-grid" id="taskCards"></div>
+  </section>
+</main>
+<dialog id="submitDialog" aria-labelledby="submitTitle">
+  <form method="dialog" id="sendWork">
+    <h2 id="submitTitle">Nộp bài</h2>
+    <label for="workUrl">Liên kết bài làm</label>
+    <input class="input" id="workUrl" type="url" placeholder="https://..." required>
+    <p>Gửi liên kết đến tài liệu, thư mục hoặc sản phẩm. Hãy bật quyền xem cho giảng viên.</p>
+    <div class="tl-actions"><button class="btn btn-outline" type="button" id="cancelWork">Hủy</button>
+    <button class="btn btn-primary" type="submit">Xác nhận nộp</button></div>
+  </form>
+</dialog>
+<footer class="footer">© 2026 DeadLine Hub - Hệ thống quản lý đồ án &amp; tiến độ báo cáo</footer>
+<script src="script.js"></script>
+</body>
+</html>
