@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#00008B">
+<meta name="description" content="Trang tổng quan hệ thống DeadLine Hub: thống kê toàn lớp, đếm ngược mốc báo cáo tiếp theo, biểu đồ tỷ lệ nộp và danh sách các mốc báo cáo.">
+<title>Trang chủ | DeadLine Hub</title>
+<script>
+try {
+  if (localStorage.getItem("dlh_theme") === "dark") {
+    document.documentElement.dataset.theme = "dark";
+  }
+} catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="Trang1_Truc/style_trang1.css">
+</head>
+<body data-page="trang1" data-role="both">
+<a class="skip-link" href="#mainContent">Bỏ qua đến nội dung chính</a>
+<div class="page-loader" id="pageLoader" aria-hidden="true">
+  <p class="loader-logo" translate="no">DeadLine Hub</p>
+  <div class="loader-dots"><i></i><i></i><i></i></div>
+  <div class="loader-bar"><span></span></div>
+</div>
+<header class="navbar" id="navbar"></header>
+<main class="main" id="mainContent">
+  <section class="page-head reveal">
+    <div class="head-row">
+      <div>
+        <h1 class="page-title"><span id="welcome">Tổng quan tiến độ đồ án</span></h1>
+        <p class="page-desc">Thống kê chung toàn hệ thống DeadLine Hub — học phần Lập trình Front-end</p>
+      </div>
+      <span class="scope-pill" id="scopePill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="m9 12 2 2 4-4"/>
+        </svg>
+        <span>Dữ liệu chung toàn lớp</span>
+      </span>
+    </div>
+  </section>
+
+  <section class="stats" id="statCards" aria-label="Thống kê tổng quan toàn hệ thống"></section>
+
+  <aside class="data-note reveal" id="dataNote" aria-label="Quy ước thống kê đồ án và lượt nộp">
+    <div class="data-note-icon" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 16v-4"/>
+        <path d="M12 8h.01"/>
+      </svg>
+    </div>
+    <p id="dataNoteText">Quy ước dữ liệu: Mỗi sinh viên quản lý <b>1 đồ án duy nhất</b>. Một đồ án có thể được nộp qua <b>nhiều mốc báo cáo</b> hoặc nhiều phiên bản, nên tổng lượt nộp theo mốc phản ánh tiến độ nộp bài toàn lớp.</p>
+  </aside>
+
+  <section class="card countdown-card glow-surface reveal d1" aria-label="Mốc báo cáo sắp tới">
+    <div class="cd-info">
+      <div class="cd-top-row">
+        <p class="cd-label">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>Deadline sắp tới</span>
+        </p>
+        <div class="cd-badges" id="countdownBadges"></div>
+      </div>
+      <h2 id="nextName">Đang tải mốc báo cáo…</h2>
+      <p id="nextDate"></p>
+    </div>
+    <div class="countdown" id="homeCountdown" aria-live="off"></div>
+  </section>
+
+  <div class="grid-2">
+    <section class="card glow-surface reveal d2">
+      <div class="card-head-row">
+        <h2 class="card-title">Tỷ lệ nộp bài toàn lớp</h2>
+        <span id="pieStatusBadge"></span>
+      </div>
+      <div class="pie-wrap">
+        <div class="pie" id="pieChart" role="img" aria-label="Biểu đồ tròn tỷ lệ đã nộp, chưa nộp và trễ hạn">
+          <div class="pie-hole"><b id="pieTotal">0</b><span>lượt mốc</span></div>
+        </div>
+        <ul class="legend" id="pieLegend"></ul>
+      </div>
+    </section>
+    <section class="card glow-surface reveal d3">
+      <h2 class="card-title">Số bài nộp theo mốc</h2>
+      <div class="bars" id="barChart" role="img" aria-label="Biểu đồ cột số bài nộp theo từng mốc báo cáo"></div>
+    </section>
+  </div>
+
+  <section class="card glow-surface reveal">
+    <div class="ms-card-head">
+      <h2 class="card-title">Danh sách các mốc báo cáo</h2>
+      <span class="small" id="milestoneSummary"></span>
+    </div>
+    <ul id="milestoneList"></ul>
+    <div class="next-step" id="nextStep"></div>
+  </section>
+</main>
+<footer class="footer">© 2026 DeadLine Hub - Hệ thống quản lý đồ án &amp; tiến độ báo cáo</footer>
+
+<div class="notif-bell-wrap" id="notifBellWrap">
+  <div class="notif-popup" id="notifPopup" role="status" aria-live="polite" hidden></div>
+  <section class="notif-drawer" id="notifDrawer" aria-label="Lịch sử thông báo nộp bài" hidden>
+    <div class="notif-drawer-head">
+      <h3>Thông báo nộp bài</h3>
+      <button type="button" class="notif-close" id="notifDrawerClose" aria-label="Đóng danh sách thông báo">×</button>
+    </div>
+    <ul class="notif-drawer-list" id="notifDrawerList"></ul>
+  </section>
+  <button type="button" class="notif-bell-btn" id="notifBellBtn" aria-label="Mở thông báo nộp bài" aria-expanded="false" aria-controls="notifDrawer">
+    <svg class="notif-bell-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+      <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+    </svg>
+    <span class="notif-count" id="notifCount" hidden>0</span>
+  </button>
+</div>
+
+<script src="Trang1_Truc/script_trang1.js"></script>
+</body>
+</html>
