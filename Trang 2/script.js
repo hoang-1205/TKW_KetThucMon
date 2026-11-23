@@ -183,7 +183,9 @@ if (milestonesChanged) saveData("pm_milestones", milestones);
 
 function documentLink(id, milestoneId) {
   const file = id === "SV01" ? "moc-" + milestoneId : id + "-moc-" + milestoneId;
-  return new URL("../Trang 2/tai-lieu/" + file + ".txt", location.href).href;
+  const page = new URL("../Trang 2/index_trang2.html", location.href);
+  page.searchParams.set("mau", file);
+  return page.href;
 }
 
 // Giữ dữ liệu người dùng, chỉ đổi đúng bài mẫu cũ.
@@ -191,7 +193,7 @@ let studentsChanged = false;
 for (const student of students) {
   const sample = SAMPLE_STUDENTS.find(item => item.id === student.id);
   for (const sub of student.submissions || []) {
-    if (sample?.submissions.some(old => old.link === sub.link && old.date === sub.date && old.milestoneId === sub.milestoneId)) {
+    if (sample?.submissions.some(old => (old.link === sub.link || sub.link === new URL("../Trang 2/tai-lieu/" + (student.id === "SV01" ? "" : student.id + "-") + "moc-" + sub.milestoneId + ".txt", location.href).href) && old.date === sub.date && old.milestoneId === sub.milestoneId)) {
       sub.link = documentLink(student.id, sub.milestoneId);
       studentsChanged = true;
     }
@@ -764,3 +766,24 @@ document.querySelector('#sendWork').onsubmit = event => {
   renderFlipCards();
   showToast('Đã ghi nhận bài nộp.');
 };
+
+const sampleDocuments = {
+  "moc-2": "ĐỀ CƯƠNG ĐỒ ÁN\n\nĐề tài: Khảo sát thói quen tự học của sinh viên.\nĐối tượng: 40 sinh viên năm hai.\nPhương pháp: bảng hỏi ẩn danh và tổng hợp kết quả.\nKế hoạch: tuần 1 soạn bảng hỏi, tuần 2 khảo sát, tuần 3 phân tích, tuần 4 viết báo cáo.",
+  "moc-1": "PHIẾU ĐĂNG KÝ ĐỀ TÀI\n\nNhóm 1 – Khảo sát thói quen tự học của sinh viên.\nMục tiêu: tìm hiểu thời gian tự học và những khó khăn sinh viên thường gặp.\nSản phẩm dự kiến: báo cáo khảo sát và đề xuất phương pháp tự học.",
+  "SV03-moc-2": "Đề cương – Nhóm 3\nĐề tài: Khảo sát nhu cầu sử dụng thư viện của sinh viên.\nMục tiêu: ghi nhận thói quen sử dụng và đề xuất cải thiện.\nKế hoạch: lập bảng hỏi, thu thập ý kiến, phân tích kết quả và viết báo cáo.\n",
+  "SV04-moc-1": "Phiếu đăng ký đề tài – Nhóm 4\nĐề tài: Khảo sát nhu cầu sử dụng thư viện của sinh viên.\nMục tiêu: ghi nhận thói quen sử dụng và đề xuất cải thiện.\nKế hoạch: lập bảng hỏi, thu thập ý kiến, phân tích kết quả và viết báo cáo.\n",
+  "SV06-moc-1": "Phiếu đăng ký đề tài – Nhóm 6\nĐề tài: Khảo sát nhu cầu sử dụng thư viện của sinh viên.\nMục tiêu: ghi nhận thói quen sử dụng và đề xuất cải thiện.\nKế hoạch: lập bảng hỏi, thu thập ý kiến, phân tích kết quả và viết báo cáo.\n",
+  "SV03-moc-1": "Phiếu đăng ký đề tài – Nhóm 3\nĐề tài: Khảo sát nhu cầu sử dụng thư viện của sinh viên.\nMục tiêu: ghi nhận thói quen sử dụng và đề xuất cải thiện.\nKế hoạch: lập bảng hỏi, thu thập ý kiến, phân tích kết quả và viết báo cáo.\n",
+  "SV02-moc-1": "Phiếu đăng ký đề tài – Nhóm 2\nĐề tài: Khảo sát nhu cầu sử dụng thư viện của sinh viên.\nMục tiêu: ghi nhận thói quen sử dụng và đề xuất cải thiện.\nKế hoạch: lập bảng hỏi, thu thập ý kiến, phân tích kết quả và viết báo cáo.\n"
+};
+const selectedDocument = new URLSearchParams(location.search).get("mau");
+if (Object.hasOwn(sampleDocuments, selectedDocument)) {
+  const content = document.createElement("pre");
+  content.style.whiteSpace = "pre-wrap";
+  content.textContent = sampleDocuments[selectedDocument];
+  const card = document.createElement("article");
+  card.className = "card";
+  card.append(content);
+  document.querySelector("main").replaceChildren(card);
+  document.title = "Tài liệu minh họa | DeadLine Hub";
+}

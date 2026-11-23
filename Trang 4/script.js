@@ -183,7 +183,9 @@ if (milestonesChanged) saveData("pm_milestones", milestones);
 
 function documentLink(id, milestoneId) {
   const file = id === "SV01" ? "moc-" + milestoneId : id + "-moc-" + milestoneId;
-  return new URL("../Trang 2/tai-lieu/" + file + ".txt", location.href).href;
+  const page = new URL("../Trang 2/index_trang2.html", location.href);
+  page.searchParams.set("mau", file);
+  return page.href;
 }
 
 // Giữ dữ liệu người dùng, chỉ đổi đúng bài mẫu cũ.
@@ -191,7 +193,7 @@ let studentsChanged = false;
 for (const student of students) {
   const sample = SAMPLE_STUDENTS.find(item => item.id === student.id);
   for (const sub of student.submissions || []) {
-    if (sample?.submissions.some(old => old.link === sub.link && old.date === sub.date && old.milestoneId === sub.milestoneId)) {
+    if (sample?.submissions.some(old => (old.link === sub.link || sub.link === new URL("../Trang 2/tai-lieu/" + (student.id === "SV01" ? "" : student.id + "-") + "moc-" + sub.milestoneId + ".txt", location.href).href) && old.date === sub.date && old.milestoneId === sub.milestoneId)) {
       sub.link = documentLink(student.id, sub.milestoneId);
       studentsChanged = true;
     }
